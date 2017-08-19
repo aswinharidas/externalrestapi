@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_app">
+    <sys_app action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <enforce_license>log</enforce_license>
+        <js_level>helsinki_es5</js_level>
+        <licensable>true</licensable>
+        <license_model>none</license_model>
+        <logo/>
+        <menu/>
+        <name>External Rest API Explorer</name>
+        <private>false</private>
+        <restrict_table_access>false</restrict_table_access>
+        <runtime_access_tracking>permissive</runtime_access_tracking>
+        <scope>x_12945_extrestapi</scope>
+        <scoped_administration>false</scoped_administration>
+        <short_description/>
+        <source>x_12945_extrestapi</source>
+        <store_correlation_id/>
+        <store_url/>
+        <sys_class_name>sys_app</sys_class_name>
+        <sys_code/>
+        <sys_created_by>aswinh</sys_created_by>
+        <sys_created_on>2017-08-10 04:33:59</sys_created_on>
+        <sys_id>0c03a7a0db200300e5fc793ebf961974</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>aswinh</sys_updated_by>
+        <sys_updated_on>2017-08-10 04:33:59</sys_updated_on>
+        <template/>
+        <trackable>true</trackable>
+        <user_role/>
+        <vendor/>
+        <vendor_prefix/>
+        <version>1.0.0</version>
+    </sys_app>
+</record_update>

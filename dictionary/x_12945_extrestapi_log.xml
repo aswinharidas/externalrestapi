@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="External REST LOG" max_length="40" name="x_12945_extrestapi_log" type="collection">
+        <element label="Request" max_length="2147483647" name="request" type="string"/>
+        <element label="Request Headers" max_length="2147483647" name="request_headers" type="string"/>
+        <element label="Response" max_length="2147483647" name="response" type="string"/>
+    </element>
+</database>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>aswinh</sys_created_by>
+        <sys_created_on>2017-08-18 19:48:59</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>6d218063dba44300e5fc793ebf961996</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_12945_extrestapi_header.admin</sys_name>
+        <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
+        <sys_security_acl display_value="x_12945_extrestapi_header">65218063dba44300e5fc793ebf961994</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_6d218063dba44300e5fc793ebf961996</sys_update_name>
+        <sys_updated_by>aswinh</sys_updated_by>
+        <sys_updated_on>2017-08-18 19:48:59</sys_updated_on>
+        <sys_user_role display_value="admin" name="admin">2831a114c611228501d4ea6c309d626d</sys_user_role>
+        <transaction_id/>
+    </sys_security_acl_role>
+</record_update>

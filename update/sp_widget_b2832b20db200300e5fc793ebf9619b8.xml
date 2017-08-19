@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <client_script><![CDATA[function($scope,$document,$window,$timeout,$compile,$http,$rootScope) {
+	/* widget controller */
+	var c = this;
+	c.int_header_count = 0;
+	c.int_used = 0;
+	$scope.array_availChoices = ["-SELECT HEADER-","CUSTOM","Accept","Accept-Charset","Accept-Encoding","Accept-Language","Accept-Datetime","Access-Control-Request-Method","Access-Control-Request-Headers[7]","Authorization","Cache-Control","Connection","Cookie","Content-Length","Content-MD5","Content-Type","Date","Expect","Forwarded","From","Host","If-Match","If-Modified-Since","If-None-Match","If-Range","If-Unmodified-Since","Max-Forwards","Origin[7]","Pragma","Proxy-Authorization","Range","Referer [sic]","TE","User-Agent","Upgrade","Via","Warning"];
+
+	$scope.compileHTML = $compile;
+
+	//sample endpoint
+	$scope.httpEndpoint = '/api/x_12945_extrestapi/rest_test_api/get';
+	//Default Method
+	$scope.httpMethod = 'GET';
+	//Hold all the headers
+	$scope.httpHeaders = {};
+	$scope.httpHeaderCust = {};
+	$scope.httpHeaderValues = {};
+
+
+	$scope.start = function(){
+		$http({
+			method: $scope.httpMethod,
+			url: $scope.httpEndpoint,
+			headers: $scope.gatherHeaders(),
+			data: $scope.httpBody
+		}).then(function successCallback(response) {
+			$rootScope.$broadcast('httpResponseObtained',response);
+		}, function errorCallback(response) {
+			$rootScope.$broadcast('httpResponseObtained',response);
+		});
+
+	}
+	$scope.gatherHeaders = function(){
+		var myHeaders = {};
+		var tempA = $scope.httpHeaders;
+		var tempB = $scope.httpHeaderCust;
+		var tempC = $scope.httpHeaderValues;
+		for(var i in tempA){
+			if(tempA[i] != '-SELECT HEADER-'){
+				if(tempA[i] != 'CUSTOM'){
+					myHeaders[tempA[i]] = tempC[i];
+				}else{
+					myHeaders[tempB[i]] = tempC[i];
+				}
+			}
+		}
+		return myHeaders;
+	}
+
+	$scope.beautify = function(){
+		$scope.httpBody = JSON.stringify($scope.httpBody,null,"\t");
+	}
+
+
+
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>div#rest_request_container{
+  display:flex;
+  flex-wrap: wrap;
+  box-shadow: 0px 0px 3px 3px #ddd;
+  padding: 2px;
+}
+div#rest_header_container{
+  display:flex;
+  flex: 0 0 100%;
+  flex-wrap: wrap;
+}
+div.header-row, div.endpoint-row{
+  display:flex;
+  flex: 0 0 100%;
+  margin-bottom: 5px;
+}
+div.header-row &gt; div.header-row-select, div.endpoint-row &gt; div.enpoint-title{
+  flex: 0 0 27%;
+}
+div.header-row &gt; div.header-row-select &gt; select{
+  width: 90%;
+}
+div.header-row &gt; div[data-isheader ='true'], div.endpoint-row &gt; div.endpoint-input{
+  flex: 0 0 50%;
+}
+div.header-row &gt; div[data-isheader ='true'] &gt; input, div.endpoint-row &gt; div.endpoint-input  &gt; input{
+  width: 75%;
+}
+div.header-row &gt; div.remove-header{
+  flex: 0 0 3%;
+  color: #fff;
+  background: #000;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  margin-left: -90px;
+
+}
+div#rest_body_container{
+  width: 100%;
+}
+div#rest_body_container &gt; textarea{
+  height: 200px;
+  width: 64.5%;
+  border: 1px solid #ddd;
+}
+
+.tempHidden{
+	display: none;
+}
+input.tempHiddenSize{
+	width: 37% !important;
+}
+input::placeholder{
+	color: #ddd;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>wgt-ext-restapi-explorer-request</id>
+        <internal>false</internal>
+        <link><![CDATA[function(scope,element,attributes){
+
+	scope.addHeader = function(){
+
+		scope.c.int_header_count++;
+		scope.c.int_used++;
+		var key = scope.c.int_used,
+				selBox = 'httpHeaders._'+ key,
+				custSel = 'httpHeaderCust._'+ key,
+				selBoxAns = 'httpHeaderValues._'+ key;
+		//Default value
+		scope.httpHeaders['_'+ key] = '-SELECT HEADER-';
+
+		var div1 = document.createElement('div');
+		div1.classList.add('header-row');
+
+		//Header Select Box
+		var div2 = document.createElement('div');
+		div2.classList.add('header-row-select');
+
+		var sel1 = document.createElement('select');
+		sel1.classList.add('header-row-select-box');
+		sel1.id = selBox;
+		sel1.setAttribute('data-customer-header',custSel);
+		sel1.setAttribute('ng-model',selBox);
+		//sel1.setAttribute('ng-change','headerSelection(' + selBox + ')');
+
+		for(var i in scope.array_availChoices){
+			var opt1 = document.createElement('option');
+			opt1.text = scope.array_availChoices[i];
+			opt1.value = scope.array_availChoices[i];
+			sel1.appendChild(opt1);
+		}
+
+		div2.appendChild(sel1);
+		div1.appendChild(div2);
+
+		//Header Input
+		var div3 = document.createElement('div');
+		div3.setAttribute('data-isheader','true');
+
+		var	inp1 = document.createElement('input');
+		inp1.setAttribute('ng-model',custSel);
+		inp1.setAttribute('ng-class','{tempHidden : ' + selBox + ' != "CUSTOM",  tempHiddenSize : ' + selBox + ' == "CUSTOM"}');
+		inp1.setAttribute('placeholder','Custom Header Name');
+
+		var	inp2 = document.createElement('input');
+		inp2.setAttribute('ng-model',selBoxAns);
+		inp2.setAttribute('placeholder','Value');
+		inp2.setAttribute('ng-class','{tempHiddenSize : ' + selBox + ' == "CUSTOM"}');
+
+		div3.appendChild(inp1);
+		div3.appendChild(inp2);
+		div1.appendChild(div3);
+
+		//Remove Row
+
+		var div4 = document.createElement('div');
+		div4.setAttribute('ng-show','c.int_header_count > 0');
+		div4.setAttribute('ng-click','removeRow($event,'+key+')');
+		div4.setAttribute('title','Click to remove');
+		div4.classList.add('remove-header');
+		div4.innerText = "-";
+
+		div1.appendChild(div4);
+
+		document.getElementById('rest_header_container').appendChild(div1);
+
+		scope.compileHTML(div1)(scope);
+	}
+
+	scope.removeRow = function(x,k){
+		x.target.parentNode.parentNode.removeChild(x.target.parentNode);
+		--scope.c.int_header_count;
+		if(scope.c.int_header_count < 1){
+			scope.c.int_header_count = 0;
+		}
+		scope.httpHeaders['_'+k] = undefined;
+		scope.httpHeaderCust['_'+k] = undefined;
+		scope.httpHeaderValues['_'+k] = undefined;
+	}
+
+
+
+}]]></link>
+        <name>Widget - External Rest API Explorer REQ</name>
+        <option_schema>[{"name":"header_choices","default_value":"--Select--","label":"Header Choices","type":"choice","choices":[{"label":"--Select--","value":"--Select--"},{"label":"Accept","value":"Accept"},{"label":"Accept-Charset","value":"Accept-Charset"},{"label":"Accept-Encoding","value":"Accept-Encoding"},{"label":"Accept-Language","value":"Accept-Language"},{"label":"Accept-Datetime","value":"Accept-Datetime"},{"label":"\"Access-Control-Request-Method,","value":"\"Access-Control-Request-Method,"},{"label":"Access-Control-Request-Headers[7]\"","value":"Access-Control-Request-Headers[7]\""},{"label":"Authorization","value":"Authorization"},{"label":"Cache-Control","value":"Cache-Control"},{"label":"Connection","value":"Connection"},{"label":"Cookie","value":"Cookie"},{"label":"Content-Length","value":"Content-Length"},{"label":"Content-MD5","value":"Content-MD5"},{"label":"Content-Type","value":"Content-Type"},{"label":"Date","value":"Date"},{"label":"Expect","value":"Expect"},{"label":"Forwarded","value":"Forwarded"},{"label":"From","value":"From"},{"label":"Host","value":"Host"},{"label":"If-Match","value":"If-Match"},{"label":"If-Modified-Since","value":"If-Modified-Since"},{"label":"If-None-Match","value":"If-None-Match"},{"label":"If-Range","value":"If-Range"},{"label":"If-Unmodified-Since","value":"If-Unmodified-Since"},{"label":"Max-Forwards","value":"Max-Forwards"},{"label":"Origin[7]","value":"Origin[7]"},{"label":"Pragma","value":"Pragma"},{"label":"Proxy-Authorization","value":"Proxy-Authorization"},{"label":"Range","value":"Range"},{"label":"Referer [sic]","value":"Referer [sic]"},{"label":"TE","value":"TE"},{"label":"User-Agent","value":"User-Agent"},{"label":"Upgrade","value":"Upgrade"},{"label":"Via","value":"Via"},{"label":"Warning","value":"Warning"}]}]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {  /* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>aswinh</sys_created_by>
+        <sys_created_on>2017-08-10 04:36:22</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b2832b20db200300e5fc793ebf9619b8</sys_id>
+        <sys_mod_count>243</sys_mod_count>
+        <sys_name>Widget - External Rest API Explorer REQ</sys_name>
+        <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
+        <sys_update_name>sp_widget_b2832b20db200300e5fc793ebf9619b8</sys_update_name>
+        <sys_updated_by>aswinh</sys_updated_by>
+        <sys_updated_on>2017-08-18 19:46:40</sys_updated_on>
+        <template><![CDATA[<div id='rest_request_container'>
+  <!-- your widget template -->
+  <h4>
+    <u>Request</u>
+  </h4>
+  
+  <div class = 'endpoint-row'>
+    <div class = 'enpoint-title'>
+      Endpoint 
+      <select style='width: 60%; margin-left: 5%;' ng-model='httpMethod'>
+        <option value='GET'> GET </option>
+        <option value='POST'> POST </option>
+      </select>
+    </div>
+    <div class = 'endpoint-input'>
+      <input ng-model='httpEndpoint' />
+    </div>
+
+    <div>
+      <button ng-click='start()'>Send</button>
+    </div>
+
+  </div>
+
+  <button ng-click='addHeader()' style='margin: 10px 0px 10px 0px;'>Add Header(s)</button>
+
+  <div id='rest_header_container'></div>
+
+  <div id='rest_body_container' ng-show='httpMethod == "POST"'>
+    <h4>
+      Body
+    </h4>
+    <div>
+      <button ng-click='beautify()' ng-show='false'> Beautify JSON </button>
+    </div>
+    <textarea ng-model='httpBody'></textarea>
+  </div>
+
+
+
+
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

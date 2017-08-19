@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_documentation element="header_name" label="Header Name" language="en" table="x_12945_extrestapi_header">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>header_name</element>
+            <help/>
+            <hint/>
+            <label>Header Name</label>
+            <language>en</language>
+            <name>x_12945_extrestapi_header</name>
+            <plural>Header Names</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>aswinh</sys_created_by>
+            <sys_created_on>2017-08-18 19:48:59</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>e9218063dba44300e5fc793ebf9619a3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Header Name</sys_name>
+            <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
+            <sys_update_name>sys_documentation_x_12945_extrestapi_header_header_name_en</sys_update_name>
+            <sys_updated_by>aswinh</sys_updated_by>
+            <sys_updated_on>2017-08-18 19:48:59</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

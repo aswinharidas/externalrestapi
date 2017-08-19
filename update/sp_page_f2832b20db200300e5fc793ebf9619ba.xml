@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sp_page">
+    <sp_page action="INSERT_OR_UPDATE">
+        <css/>
+        <draft>false</draft>
+        <id>external_rest_api_explorer</id>
+        <internal>false</internal>
+        <public>false</public>
+        <roles/>
+        <short_description/>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>aswinh</sys_created_by>
+        <sys_created_on>2017-08-10 04:36:22</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f2832b20db200300e5fc793ebf9619ba</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>external_rest_api_explorer</sys_name>
+        <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
+        <sys_update_name>sp_page_f2832b20db200300e5fc793ebf9619ba</sys_update_name>
+        <sys_updated_by>aswinh</sys_updated_by>
+        <sys_updated_on>2017-08-10 04:36:22</sys_updated_on>
+        <title>Widget - External Rest API Explorer - Request - Test Page</title>
+    </sp_page>
+</record_update>

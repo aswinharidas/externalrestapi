@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sp_container">
+    <sp_container action="INSERT_OR_UPDATE">
+        <background_color/>
+        <background_image/>
+        <background_style>default</background_style>
+        <bootstrap_alt>false</bootstrap_alt>
+        <class_name/>
+        <container_class_name/>
+        <name>Widget - External Rest API Explorer - Request - Test Page - Container 1</name>
+        <order>1</order>
+        <sp_page display_value="external_rest_api_explorer">f2832b20db200300e5fc793ebf9619ba</sp_page>
+        <subheader>false</subheader>
+        <sys_class_name>sp_container</sys_class_name>
+        <sys_created_by>aswinh</sys_created_by>
+        <sys_created_on>2017-08-17 14:59:45</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>c7553903dbe80300e5fc793ebf961973</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Widget - External Rest API Explorer - Request - Test Page - Container 1</sys_name>
+        <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
+        <sys_update_name>sp_container_c7553903dbe80300e5fc793ebf961973</sys_update_name>
+        <sys_updated_by>aswinh</sys_updated_by>
+        <sys_updated_on>2017-08-17 14:59:45</sys_updated_on>
+        <title/>
+        <width>container</width>
+    </sp_container>
+</record_update>
