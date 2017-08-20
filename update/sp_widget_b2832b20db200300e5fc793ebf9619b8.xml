@@ -7,16 +7,14 @@
 
 	/*Used but the End Point / Method*/
 	//sample endpoint
-	$scope.httpEndpoint = '/api/x_12945_extrestapi/rest_test_api/get';
+	//$scope.httpEndpoint = '/api/x_12945_extrestapi/rest_test_api/get';
+	$scope.httpEndpoint = 'https://dev18816.service-now.com/api/113970/ping/myv1';
 	//Default Method
 	$scope.httpMethod = 'GET';
-	
-
 	/*Used for the Header Block*/
 	$scope.headerConfigList = []; //Holds Headers @ each index position. It would be an object
 	$scope.httpFinalHeaders = {}; //I don't know what this is used for, cannot remember now
 	$scope.headerUniqueID = 0;//Unique ID ; need to distinguish the ng-models for varisous headers
-
 	//Logic to replicate a header object
 	$scope.addHeader = function(){
 		var hc = $scope.headerUniqueID;
@@ -31,6 +29,7 @@
 			}
 		});
 		$scope.headerUniqueID++;
+		return 1;
 	}
 	//Logic to remove a header Object
 	$scope.removeHeader = function(id){
@@ -40,7 +39,33 @@
 				hl.splice(i,1);
 			}
 		}
+		return 1;
 	}
+	//Authentication Operations
+	$scope.authHeader =[];
+	$scope.httpAuthType = 'Username / Password';
+	$scope.addAuthentication = function(){
+		$scope.authHeader.push({});
+		return 1;
+	}
+	$scope.removeAuthentication = function(){
+		$scope.authHeader = [];
+		$scope.httpAuthType = 'Username / Password';
+		return 1;
+	}
+	$scope.encodeAuthentication = function(enc){
+		if(enc){//True if it is to encode
+			$scope.httpAuthType = 'Base64 Encoded';
+			$scope.authHeader[0][0].httpBase64 = btoa($scope.authHeader[0][0].httpUsername +":"+ $scope.authHeader[0][0].httpPassword);
+		}else{
+			$scope.httpAuthType = 'Username / Password';
+			var encodedString  = atob($scope.authHeader[0][0].httpBase64).split(":");
+			$scope.authHeader[0][0].httpUsername = encodedString[0];
+			$scope.authHeader[0][0].httpPassword = encodedString[1];
+		}
+		return $scope.authHeader[0][0].httpUsername+":"+$scope.authHeader[0][0].httpPassword;
+	}
+
 	/*Used by the send button*/
 	$scope.httpDuration =0;
 	$scope.start = function(){
@@ -70,11 +95,17 @@
 			var headerValue = $scope.httpFinalHeaders[i]['value_header_'+i];
 			finalHeaders[headerKey] = headerValue;
 		}
+		//Add the Authentication Header
+		if($scope.httpAuthType == 'Base64 Encoded'){
+			finalHeaders.Authorization = 'Basic '+ $scope.authHeader[0][0].httpBase64;
+		}else{
+			finalHeaders.Authorization = 'Basic '+ btoa($scope.encodeAuthentication(true));
+		}
 		return finalHeaders;
 	}
-
 	$scope.beautify = function(){
-		$scope.httpBody = JSON.stringify($scope.httpBody,null,"\t");
+		$scope.httpBody = JSON.stringify($scope.httpBody.data,null,"\t");
+		return 1;
 	}
 
 
@@ -131,15 +162,15 @@ div#rest_body_container &gt; textarea{
 }
 
 .tempHidden{
-	display: none;
+  display: none;
 }
 input.tempHiddenSize{
-	width: 37% !important;
+  width: 37% !important;
 }
 
 //Used by all
 input::placeholder{
-	color: #ddd;
+  color: #ddd;
 }
 
 //Used by the Endpoint block
@@ -193,7 +224,17 @@ input::placeholder{
     height: 90px;
   }
 }
-</css>
+//Authentication
+button[disabled]{
+  opacity: .5;
+  cursor: not-allowed;
+}
+input:focus {
+  border-color: #278efc;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(39, 142, 252, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(39, 142, 252, 0.6);
+}</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -231,7 +272,7 @@ input::placeholder{
         <sys_created_on>2017-08-10 04:36:22</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b2832b20db200300e5fc793ebf9619b8</sys_id>
-        <sys_mod_count>306</sys_mod_count>
+        <sys_mod_count>351</sys_mod_count>
         <sys_name>Widget - External Rest API Explorer REQ</sys_name>
         <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
         <sys_policy/>
@@ -239,12 +280,15 @@ input::placeholder{
         <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
         <sys_update_name>sp_widget_b2832b20db200300e5fc793ebf9619b8</sys_update_name>
         <sys_updated_by>aswinh</sys_updated_by>
-        <sys_updated_on>2017-08-20 05:33:35</sys_updated_on>
+        <sys_updated_on>2017-08-20 08:46:40</sys_updated_on>
         <template><![CDATA[<div id='rest_request_container'>
   <!-- your widget template -->
+  <h4>
+    Request 
+  </h4>
   <span ng-show='httpDuration != 0 '>  Duration :  {{httpDuration}}s </span>
-  
-  
+
+
   <!-- Method and Endpoint -->
   <div class='flex h-lh-40' style='flex: 0 0 100%; flex-wrap: wrap; max-width: 100%;'>
     <div style='margin-right: 2px; flex: 1 1 15%'>
@@ -268,18 +312,41 @@ input::placeholder{
   <button ng-click='addHeader()' style="margin-bottom: 10px;background: #f8f8f8;border: 1px solid #ddd;border-radius: 5px;margin-top: 5px;width: 200px; margin-right: 5px;">
     Add Header
   </button>
-  <button ng-click='addAuthentication()' style="margin-bottom: 10px;background: #f8f8f8;border: 1px solid #ddd;border-radius: 5px;margin-top: 5px;width: 200px;  margin-right: 5px;">
+  <button ng-disabled='authHeader.length > 0' ng-click='addAuthentication()' style="margin-bottom: 10px;background: #f8f8f8;border: 1px solid #ddd;border-radius: 5px;margin-top: 5px;width: 200px;  margin-right: 5px;">
     Authentication
   </button>
+  <!-- Authorization -->
+  <div class='my-flex header-rpt' ng-repeat='auth in authHeader'>
+    <div style='flex: 1 1 15%;'>
+      <select ng-model='httpAuthType' style='width: 100%;' class='h-100 no-border-color'>
+        <option value='Username / Password'>Usr / Pwd</option>
+        <option value='Base64 Encoded'>Base64 Encoded</option>
+      </select>
+    </div>
+    <div style='flex: 1 1 60%;' class='my-flex'>
+      <input ng-model='auth[0].httpUsername' ng-show="httpAuthType == 'Username / Password' " class='h-100 commom-style-1' style='flex: 0 0 50%;border-right:1px solid #ddd;' placeholder='Username'/>
+      <input ng-model='auth[0].httpPassword' ng-show="httpAuthType == 'Username / Password' " class='h-100 commom-style-1' style='flex: 0 0 50%;' placeholder='Password' type='password'/>
+      <input ng-model='auth[0].httpBase64' ng-hide="httpAuthType == 'Username / Password' " class='h-100 commom-style-1' style='flex: 0 1 100%;' placeholder='Base64'/>
+    </div>
+    <div style='flex: 1 1 25%; '>
+      <button ng-show='httpAuthType == "Username / Password" ' ng-click='encodeAuthentication(true)' class='h-100 no-border-color' style='border-right: 1px solid  #ddd; width: 50%; background-color: rgb(248, 248, 248);border-bottom-right-radius: 5px;'>
+        Encode(b64)
+      </button>
+      <button ng-show='httpAuthType != "Username / Password" ' ng-click='encodeAuthentication(false)' class='h-100 no-border-color' style='border-right: 1px solid  #ddd; width: 50%; background-color: rgb(248, 248, 248);border-bottom-right-radius: 5px;'>
+        Decode(b64)
+      </button>
+      <button  ng-click='removeAuthentication()' class='h-100 no-border-color' style='width: 30%; background-color: rgb(248, 248, 248);border-bottom-right-radius: 5px;'>
+        Remove 
+      </button>
+    </div>
+  </div>
   <div ng-repeat='h in headerConfigList' class='my-flex header-rpt' >
-
     <div style='flex: 1 1 20%;'>
-      <select ng-model='httpFinalHeaders[h.item.id][h.item.select]' data-test='h.{{$index}}' style='width: 100%;' class='h-100 no-border-color'>
+      <select ng-model='httpFinalHeaders[h.item.id][h.item.select]' style='width: 100%;' class='h-100 no-border-color'>
         <option value='-Select-'>-Select-</option>
         <option ng-repeat='x in data.listOfHeaders | orderBy:"label"' value='{{x.label}}' title='{{x.title}}'>{{x.label}}</option>
       </select>
     </div>
-
     <div style='flex: 1 1 75%;' class='my-flex'>
       <input ng-model='httpFinalHeaders[h.item.id][h.item.custom]' ng-show="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' " class='h-100 commom-style-1' style='flex: 0 0 50%;border-right:1px solid #ddd;' placeholder='Header'/>
       <input ng-model='httpFinalHeaders[h.item.id][h.item.value]' ng-show="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' " class='h-100 commom-style-1' style='flex: 0 0 50%;' placeholder='Value'/>
@@ -291,25 +358,15 @@ input::placeholder{
       </button>
     </div>
   </div>
-
-
-
+  
   <!-- OLD -->
-
-
   <div id='rest_body_container' ng-show='httpMethod == "POST"'  style='margin-right: 2px;'>
-
     Body
     <div>
       <button ng-click='beautify()' ng-show='false'> Beautify JSON </button>
     </div>
     <textarea ng-model='httpBody' style=''></textarea>
   </div>
-
-
-
-
-
 </div>]]></template>
     </sp_widget>
 </record_update>

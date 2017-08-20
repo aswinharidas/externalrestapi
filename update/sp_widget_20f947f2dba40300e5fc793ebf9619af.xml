@@ -39,7 +39,13 @@ div#rest_response_container &gt; div.pill-box{
   flex-direction: row-reverse;
 }
 div#rest_response_container &gt; div.pill-box &gt; button{
-	margin-left: 2px;
+	margin-bottom: 10px;
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 5px;
+  width: 70px;
+  margin-right: 5px;
 } 
 div#rest_response_container &gt; div.status-box{
 	border-bottom: 1px solid #ddd;
@@ -65,7 +71,7 @@ div#rest_response_container &gt; div.status-box{
         <sys_created_on>2017-08-17 02:30:51</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>20f947f2dba40300e5fc793ebf9619af</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>38</sys_mod_count>
         <sys_name>Widget - External Rest API Explorer - Re</sys_name>
         <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
         <sys_policy/>
@@ -73,7 +79,7 @@ div#rest_response_container &gt; div.status-box{
         <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
         <sys_update_name>sp_widget_20f947f2dba40300e5fc793ebf9619af</sys_update_name>
         <sys_updated_by>aswinh</sys_updated_by>
-        <sys_updated_on>2017-08-18 19:35:30</sys_updated_on>
+        <sys_updated_on>2017-08-20 06:01:32</sys_updated_on>
         <template><![CDATA[<div style=' {{httpBorderColor}}' id='rest_response_container'>
   <!-- your widget template -->
   <h4>
