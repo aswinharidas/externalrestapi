@@ -4,50 +4,73 @@
         <client_script><![CDATA[function($scope,$document,$window,$timeout,$compile,$http,$rootScope) {
 	/* widget controller */
 	var c = this;
-	c.int_header_count = 0;
-	c.int_used = 0;
-	$scope.array_availChoices = ["-SELECT HEADER-","CUSTOM","Accept","Accept-Charset","Accept-Encoding","Accept-Language","Accept-Datetime","Access-Control-Request-Method","Access-Control-Request-Headers[7]","Authorization","Cache-Control","Connection","Cookie","Content-Length","Content-MD5","Content-Type","Date","Expect","Forwarded","From","Host","If-Match","If-Modified-Since","If-None-Match","If-Range","If-Unmodified-Since","Max-Forwards","Origin[7]","Pragma","Proxy-Authorization","Range","Referer [sic]","TE","User-Agent","Upgrade","Via","Warning"];
 
-	$scope.compileHTML = $compile;
-
+	/*Used but the End Point / Method*/
 	//sample endpoint
 	$scope.httpEndpoint = '/api/x_12945_extrestapi/rest_test_api/get';
 	//Default Method
 	$scope.httpMethod = 'GET';
-	//Hold all the headers
-	$scope.httpHeaders = {};
-	$scope.httpHeaderCust = {};
-	$scope.httpHeaderValues = {};
+	
 
+	/*Used for the Header Block*/
+	$scope.headerConfigList = []; //Holds Headers @ each index position. It would be an object
+	$scope.httpFinalHeaders = {}; //I don't know what this is used for, cannot remember now
+	$scope.headerUniqueID = 0;//Unique ID ; need to distinguish the ng-models for varisous headers
 
+	//Logic to replicate a header object
+	$scope.addHeader = function(){
+		var hc = $scope.headerUniqueID;
+		$scope.httpFinalHeaders[hc] = {};
+		$scope.httpFinalHeaders[hc]['selected_header_'+hc] = '-Select-'
+		$scope.headerConfigList.push({
+			'item' : {
+				'id' : hc,
+				'select' : 'selected_header_'+hc,
+				'custom' : 'custom_header_'+hc,
+				'value' : 'value_header_'+hc
+			}
+		});
+		$scope.headerUniqueID++;
+	}
+	//Logic to remove a header Object
+	$scope.removeHeader = function(id){
+		var hl = $scope.headerConfigList;
+		for(var i=0; i< hl.length; i++){
+			if(hl[i].item.id == id){
+				hl.splice(i,1);
+			}
+		}
+	}
+	/*Used by the send button*/
+	$scope.httpDuration =0;
 	$scope.start = function(){
+		$scope.httpReqStart = new Date().getTime();
 		$http({
 			method: $scope.httpMethod,
 			url: $scope.httpEndpoint,
 			headers: $scope.gatherHeaders(),
 			data: $scope.httpBody
 		}).then(function successCallback(response) {
+			$scope.httpDuration = (new Date().getTime() - $scope.httpReqStart)/1000;
 			$rootScope.$broadcast('httpResponseObtained',response);
 		}, function errorCallback(response) {
+			$scope.httpDuration = (new Date().getTime() - $scope.httpReqStart)/1000;
 			$rootScope.$broadcast('httpResponseObtained',response);
 		});
 
 	}
+
 	$scope.gatherHeaders = function(){
-		var myHeaders = {};
-		var tempA = $scope.httpHeaders;
-		var tempB = $scope.httpHeaderCust;
-		var tempC = $scope.httpHeaderValues;
-		for(var i in tempA){
-			if(tempA[i] != '-SELECT HEADER-'){
-				if(tempA[i] != 'CUSTOM'){
-					myHeaders[tempA[i]] = tempC[i];
-				}else{
-					myHeaders[tempB[i]] = tempC[i];
-				}
+		var finalHeaders = {};
+		for(var i in $scope.httpFinalHeaders){
+			var headerKey = $scope.httpFinalHeaders[i]['selected_header_'+i];
+			if(headerKey == '> Custom'){
+				headerKey = $scope.httpFinalHeaders[i]['custom_header_'+i];
 			}
+			var headerValue = $scope.httpFinalHeaders[i]['value_header_'+i];
+			finalHeaders[headerKey] = headerValue;
 		}
-		return myHeaders;
+		return finalHeaders;
 	}
 
 	$scope.beautify = function(){
@@ -61,8 +84,9 @@
         <css>div#rest_request_container{
   display:flex;
   flex-wrap: wrap;
-  box-shadow: 0px 0px 3px 3px #ddd;
+  box-shadow: 0px 0px 1px 1px #ddd;
   padding: 2px;
+  min-width: 100%;
 }
 div#rest_header_container{
   display:flex;
@@ -101,8 +125,9 @@ div#rest_body_container{
 }
 div#rest_body_container &gt; textarea{
   height: 200px;
-  width: 64.5%;
+  width: 100%;
   border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .tempHidden{
@@ -111,8 +136,62 @@ div#rest_body_container &gt; textarea{
 input.tempHiddenSize{
 	width: 37% !important;
 }
+
+//Used by all
 input::placeholder{
 	color: #ddd;
+}
+
+//Used by the Endpoint block
+.flex{
+  display: flex;
+}
+.commom-style-1{
+  border-color: transparent;
+  padding: 10px;
+}
+.h-lh-40{
+  min-height: 40px;
+  line-height: 40px;
+}
+.btn-my-1{
+  line-height: 100%;
+  background: rgb(248,248,248);
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px; 
+}
+//Used by Endpoint &amp; Header
+.no-overflow{
+  overflow: hidden;
+}
+.h-100{
+  height: 100%;
+}
+
+.no-border-color{
+  border-color: transparent;
+}
+
+//Used by Header Block
+.my-flex{
+  display: flex;
+}
+.header-rpt{
+  margin-bottom: 5px;
+  flex: 0 0 100%;
+  flex-wrap: wrap;
+  max-width: 100%;
+  height: 40px;
+  border:1px solid #ddd;
+  border-radius: 5px;
+  background: rgb(248,248,248);
+  padding: 2px;
+  overflow-x: scroll;
+}
+@media only screen and (max-width: 420px) {
+  .header-rpt{
+    height: 90px;
+  }
 }
 </css>
         <data_table>sp_instance</data_table>
@@ -123,103 +202,36 @@ input::placeholder{
         <has_preview>true</has_preview>
         <id>wgt-ext-restapi-explorer-request</id>
         <internal>false</internal>
-        <link><![CDATA[function(scope,element,attributes){
-
-	scope.addHeader = function(){
-
-		scope.c.int_header_count++;
-		scope.c.int_used++;
-		var key = scope.c.int_used,
-				selBox = 'httpHeaders._'+ key,
-				custSel = 'httpHeaderCust._'+ key,
-				selBoxAns = 'httpHeaderValues._'+ key;
-		//Default value
-		scope.httpHeaders['_'+ key] = '-SELECT HEADER-';
-
-		var div1 = document.createElement('div');
-		div1.classList.add('header-row');
-
-		//Header Select Box
-		var div2 = document.createElement('div');
-		div2.classList.add('header-row-select');
-
-		var sel1 = document.createElement('select');
-		sel1.classList.add('header-row-select-box');
-		sel1.id = selBox;
-		sel1.setAttribute('data-customer-header',custSel);
-		sel1.setAttribute('ng-model',selBox);
-		//sel1.setAttribute('ng-change','headerSelection(' + selBox + ')');
-
-		for(var i in scope.array_availChoices){
-			var opt1 = document.createElement('option');
-			opt1.text = scope.array_availChoices[i];
-			opt1.value = scope.array_availChoices[i];
-			sel1.appendChild(opt1);
-		}
-
-		div2.appendChild(sel1);
-		div1.appendChild(div2);
-
-		//Header Input
-		var div3 = document.createElement('div');
-		div3.setAttribute('data-isheader','true');
-
-		var	inp1 = document.createElement('input');
-		inp1.setAttribute('ng-model',custSel);
-		inp1.setAttribute('ng-class','{tempHidden : ' + selBox + ' != "CUSTOM",  tempHiddenSize : ' + selBox + ' == "CUSTOM"}');
-		inp1.setAttribute('placeholder','Custom Header Name');
-
-		var	inp2 = document.createElement('input');
-		inp2.setAttribute('ng-model',selBoxAns);
-		inp2.setAttribute('placeholder','Value');
-		inp2.setAttribute('ng-class','{tempHiddenSize : ' + selBox + ' == "CUSTOM"}');
-
-		div3.appendChild(inp1);
-		div3.appendChild(inp2);
-		div1.appendChild(div3);
-
-		//Remove Row
-
-		var div4 = document.createElement('div');
-		div4.setAttribute('ng-show','c.int_header_count > 0');
-		div4.setAttribute('ng-click','removeRow($event,'+key+')');
-		div4.setAttribute('title','Click to remove');
-		div4.classList.add('remove-header');
-		div4.innerText = "-";
-
-		div1.appendChild(div4);
-
-		document.getElementById('rest_header_container').appendChild(div1);
-
-		scope.compileHTML(div1)(scope);
-	}
-
-	scope.removeRow = function(x,k){
-		x.target.parentNode.parentNode.removeChild(x.target.parentNode);
-		--scope.c.int_header_count;
-		if(scope.c.int_header_count < 1){
-			scope.c.int_header_count = 0;
-		}
-		scope.httpHeaders['_'+k] = undefined;
-		scope.httpHeaderCust['_'+k] = undefined;
-		scope.httpHeaderValues['_'+k] = undefined;
-	}
-
-
-
-}]]></link>
+        <link/>
         <name>Widget - External Rest API Explorer REQ</name>
         <option_schema>[{"name":"header_choices","default_value":"--Select--","label":"Header Choices","type":"choice","choices":[{"label":"--Select--","value":"--Select--"},{"label":"Accept","value":"Accept"},{"label":"Accept-Charset","value":"Accept-Charset"},{"label":"Accept-Encoding","value":"Accept-Encoding"},{"label":"Accept-Language","value":"Accept-Language"},{"label":"Accept-Datetime","value":"Accept-Datetime"},{"label":"\"Access-Control-Request-Method,","value":"\"Access-Control-Request-Method,"},{"label":"Access-Control-Request-Headers[7]\"","value":"Access-Control-Request-Headers[7]\""},{"label":"Authorization","value":"Authorization"},{"label":"Cache-Control","value":"Cache-Control"},{"label":"Connection","value":"Connection"},{"label":"Cookie","value":"Cookie"},{"label":"Content-Length","value":"Content-Length"},{"label":"Content-MD5","value":"Content-MD5"},{"label":"Content-Type","value":"Content-Type"},{"label":"Date","value":"Date"},{"label":"Expect","value":"Expect"},{"label":"Forwarded","value":"Forwarded"},{"label":"From","value":"From"},{"label":"Host","value":"Host"},{"label":"If-Match","value":"If-Match"},{"label":"If-Modified-Since","value":"If-Modified-Since"},{"label":"If-None-Match","value":"If-None-Match"},{"label":"If-Range","value":"If-Range"},{"label":"If-Unmodified-Since","value":"If-Unmodified-Since"},{"label":"Max-Forwards","value":"Max-Forwards"},{"label":"Origin[7]","value":"Origin[7]"},{"label":"Pragma","value":"Pragma"},{"label":"Proxy-Authorization","value":"Proxy-Authorization"},{"label":"Range","value":"Range"},{"label":"Referer [sic]","value":"Referer [sic]"},{"label":"TE","value":"TE"},{"label":"User-Agent","value":"User-Agent"},{"label":"Upgrade","value":"Upgrade"},{"label":"Via","value":"Via"},{"label":"Warning","value":"Warning"}]}]</option_schema>
         <public>false</public>
         <roles/>
-        <script><![CDATA[(function() {  /* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */})();]]></script>
+        <script><![CDATA[(function() {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+	data.listOfHeaders=[];
+	if(!input){
+		var h = new GlideRecord('x_12945_extrestapi_header');
+		h.addQuery('active',true);
+		h.query();
+		while(h.next()){
+			var obj_h = {};
+			obj_h.value = h.getDisplayValue();
+			obj_h.label = h.getDisplayValue();
+			obj_h.title = h.hint.getDisplayValue() +" > "+h.example.getDisplayValue();
+			data.listOfHeaders.push(obj_h);
+		}
+	}
+
+})();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>aswinh</sys_created_by>
         <sys_created_on>2017-08-10 04:36:22</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b2832b20db200300e5fc793ebf9619b8</sys_id>
-        <sys_mod_count>243</sys_mod_count>
+        <sys_mod_count>306</sys_mod_count>
         <sys_name>Widget - External Rest API Explorer REQ</sys_name>
         <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
         <sys_policy/>
@@ -227,43 +239,71 @@ input::placeholder{
         <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
         <sys_update_name>sp_widget_b2832b20db200300e5fc793ebf9619b8</sys_update_name>
         <sys_updated_by>aswinh</sys_updated_by>
-        <sys_updated_on>2017-08-18 19:46:40</sys_updated_on>
+        <sys_updated_on>2017-08-20 05:33:35</sys_updated_on>
         <template><![CDATA[<div id='rest_request_container'>
   <!-- your widget template -->
-  <h4>
-    <u>Request</u>
-  </h4>
+  <span ng-show='httpDuration != 0 '>  Duration :  {{httpDuration}}s </span>
   
-  <div class = 'endpoint-row'>
-    <div class = 'enpoint-title'>
-      Endpoint 
-      <select style='width: 60%; margin-left: 5%;' ng-model='httpMethod'>
-        <option value='GET'> GET </option>
-        <option value='POST'> POST </option>
+  
+  <!-- Method and Endpoint -->
+  <div class='flex h-lh-40' style='flex: 0 0 100%; flex-wrap: wrap; max-width: 100%;'>
+    <div style='margin-right: 2px; flex: 1 1 15%'>
+      Endpoint  <!-- : {{httpEndpoint}}-->
+    </div>
+    <div class='flex h-lh-40 no-overflow' style='border:1px solid #ddd; border-radius: 5px; background: linear-gradient(to right, rgb(248,248,248), transparent); flex: 1 1 85%; justify-content: flex-end;'>
+      <select class='h-100 commom-style-1 no-border-color' style='flex: 0 0 15%; background-color: transparent;' ng-model='httpMethod'>
+        <option value='GET'>GET</option>
+        <option value='POST'>POST</option>
+        <option value='DELETE'>DELETE</option>
+        <option value='PUTCH'>PUTCH</option>
       </select>
+      <input class='h-100 commom-style-1' style='flex: 0 1 65%;' ng-model='httpEndpoint'/>
+      <button class='h-100 no-border-color btn-my-1' style='flex: 0 0 15%; padding: 0px;' ng-click='start()'>
+        Send
+      </button>
     </div>
-    <div class = 'endpoint-input'>
-      <input ng-model='httpEndpoint' />
-    </div>
-
-    <div>
-      <button ng-click='start()'>Send</button>
-    </div>
-
   </div>
 
-  <button ng-click='addHeader()' style='margin: 10px 0px 10px 0px;'>Add Header(s)</button>
+  <!-- Header container and logic -->
+  <button ng-click='addHeader()' style="margin-bottom: 10px;background: #f8f8f8;border: 1px solid #ddd;border-radius: 5px;margin-top: 5px;width: 200px; margin-right: 5px;">
+    Add Header
+  </button>
+  <button ng-click='addAuthentication()' style="margin-bottom: 10px;background: #f8f8f8;border: 1px solid #ddd;border-radius: 5px;margin-top: 5px;width: 200px;  margin-right: 5px;">
+    Authentication
+  </button>
+  <div ng-repeat='h in headerConfigList' class='my-flex header-rpt' >
 
-  <div id='rest_header_container'></div>
+    <div style='flex: 1 1 20%;'>
+      <select ng-model='httpFinalHeaders[h.item.id][h.item.select]' data-test='h.{{$index}}' style='width: 100%;' class='h-100 no-border-color'>
+        <option value='-Select-'>-Select-</option>
+        <option ng-repeat='x in data.listOfHeaders | orderBy:"label"' value='{{x.label}}' title='{{x.title}}'>{{x.label}}</option>
+      </select>
+    </div>
 
-  <div id='rest_body_container' ng-show='httpMethod == "POST"'>
-    <h4>
-      Body
-    </h4>
+    <div style='flex: 1 1 75%;' class='my-flex'>
+      <input ng-model='httpFinalHeaders[h.item.id][h.item.custom]' ng-show="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' " class='h-100 commom-style-1' style='flex: 0 0 50%;border-right:1px solid #ddd;' placeholder='Header'/>
+      <input ng-model='httpFinalHeaders[h.item.id][h.item.value]' ng-show="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' " class='h-100 commom-style-1' style='flex: 0 0 50%;' placeholder='Value'/>
+      <input ng-model='httpFinalHeaders[h.item.id][h.item.value]' ng-hide="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' " class='h-100 commom-style-1' style='flex: 0 1 100%;' placeholder='Value'/>
+    </div>
+    <div style='flex: 1 1 5%; '>
+      <button class='h-100 no-border-color' style='width: 100%; background-color: rgb(248, 248, 248); font-weight: bold;  border-bottom-right-radius: 5px;' ng-click='removeHeader(h.item.id)'>
+        -
+      </button>
+    </div>
+  </div>
+
+
+
+  <!-- OLD -->
+
+
+  <div id='rest_body_container' ng-show='httpMethod == "POST"'  style='margin-right: 2px;'>
+
+    Body
     <div>
       <button ng-click='beautify()' ng-show='false'> Beautify JSON </button>
     </div>
-    <textarea ng-model='httpBody'></textarea>
+    <textarea ng-model='httpBody' style=''></textarea>
   </div>
 
 

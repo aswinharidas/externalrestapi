@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
     <element label="External REST Header" max_length="40" name="x_12945_extrestapi_header" type="collection">
+        <element label="Active" max_length="40" name="active" type="boolean"/>
         <element label="Example" max_length="100" name="example" type="string"/>
         <element display="true" label="Header Name" max_length="100" name="header_name" type="string"/>
         <element label="Hint" max_length="200" name="hint" type="string"/>
