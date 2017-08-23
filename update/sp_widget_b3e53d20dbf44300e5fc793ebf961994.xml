@@ -118,12 +118,12 @@
 		return 1;
 	}
 	$scope.save= function(){
-		c.data.reqConfig = {
+		/*c.data.reqConfig = {
 			'httpEndpoint' : $scope.httpEndpoint,
 			'httpMethod': $scope.httpMethod,
 			'httpFinalHeaders': $scope.gatherHeaders()
 		}
-		console.warn(c.data.reqConfig);
+		console.warn(c.data.reqConfig);*/
 		c.server.update();
 	}
 
@@ -137,7 +137,7 @@
   flex-direction: column;
   box-shadow: 0px 0px 1px 1px #ddd;
   padding: 2px;
-  min-width: 305px;
+  min-width: 100%;
 }
 div#rest_header_container{
   display:flex;
@@ -259,79 +259,6 @@ input:focus {
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(39, 142, 252, 0.6);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(39, 142, 252, 0.6);
-}
-//Modified from codePen
-//https://codepen.io/aswinharidas/pen/VzxpEm?editors=1100
-.my-row{
-	display: flex;
-	flex-wrap: wrap;
-	border: 1px solid #ddd;
-	border-radius: 2px;
-	background: rgb(248,248,248);
-	min-width: 300px;
-	font-size: 14px !important;
-  margin-bottom: 2px;
-}
-.my-row &gt; div{
-	height: 40px;
-}
-.sect1{
-	flex: 0 0 25%;
-	order: 1;
-	width: 100%;
-	
-}
-.sect1 &gt; select{
-	height: 40px;
-	border-color: transparent;
-}
-.sect2{
-	flex: 0 0 50%;
-	order: 2;
-	display: flex;
-	padding: 0px;
-	
-	overflow: hidden;
-}
-.sect2 &gt; input{
-	height: 100%;
-	width: 50%;
-	padding: 0px;
-	padding-left: 5px;
-	border: 0px transparent;
-}
-.sect2 &gt; input:not(:last-child):after{
-	content : '|';
-	height: 40px;
-	width: auto;
-}
-.sect3{
-	flex: 0 0 25%;
-	order: 3;
-	line-height: 40px;
-	text-align: center;
-}
-.separator{
-	border-right: 1px solid #ddd !important;
-}
-
-
-
-
-@media screen and (max-width: 450px) {
-	.my-flex-dir{
-		flex-direction: column;
-	}
-  .mob-addl1{
-  	justify-content: space-around;
-  }
-}
-
-
-@media all and (min-width: 451px){
-	.my-flex-dir{
-		flex-direction: row;
-	}
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -339,10 +266,10 @@ input:focus {
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>wgt-ext-restapi-explorer-request</id>
+        <id>wgt-ext-restapi-explorer-request-1</id>
         <internal>false</internal>
         <link/>
-        <name>Widget - External Rest API Explorer REQ</name>
+        <name>EXT - BACK UP</name>
         <option_schema>[{"name":"header_choices","default_value":"--Select--","label":"Header Choices","type":"choice","choices":[{"label":"--Select--","value":"--Select--"},{"label":"Accept","value":"Accept"},{"label":"Accept-Charset","value":"Accept-Charset"},{"label":"Accept-Encoding","value":"Accept-Encoding"},{"label":"Accept-Language","value":"Accept-Language"},{"label":"Accept-Datetime","value":"Accept-Datetime"},{"label":"\"Access-Control-Request-Method,","value":"\"Access-Control-Request-Method,"},{"label":"Access-Control-Request-Headers[7]\"","value":"Access-Control-Request-Headers[7]\""},{"label":"Authorization","value":"Authorization"},{"label":"Cache-Control","value":"Cache-Control"},{"label":"Connection","value":"Connection"},{"label":"Cookie","value":"Cookie"},{"label":"Content-Length","value":"Content-Length"},{"label":"Content-MD5","value":"Content-MD5"},{"label":"Content-Type","value":"Content-Type"},{"label":"Date","value":"Date"},{"label":"Expect","value":"Expect"},{"label":"Forwarded","value":"Forwarded"},{"label":"From","value":"From"},{"label":"Host","value":"Host"},{"label":"If-Match","value":"If-Match"},{"label":"If-Modified-Since","value":"If-Modified-Since"},{"label":"If-None-Match","value":"If-None-Match"},{"label":"If-Range","value":"If-Range"},{"label":"If-Unmodified-Since","value":"If-Unmodified-Since"},{"label":"Max-Forwards","value":"Max-Forwards"},{"label":"Origin[7]","value":"Origin[7]"},{"label":"Pragma","value":"Pragma"},{"label":"Proxy-Authorization","value":"Proxy-Authorization"},{"label":"Range","value":"Range"},{"label":"Referer [sic]","value":"Referer [sic]"},{"label":"TE","value":"TE"},{"label":"User-Agent","value":"User-Agent"},{"label":"Upgrade","value":"Upgrade"},{"label":"Via","value":"Via"},{"label":"Warning","value":"Warning"}]}]</option_schema>
         <public>false</public>
         <roles/>
@@ -362,28 +289,27 @@ input:focus {
 			data.listOfHeaders.push(obj_h);
 		}
 	}else{
-		var reqConfig = input.reqConfig;
-		for(var i in reqConfig){
-			$sp.log(i);
-		}
+		
+		$sp.log(input);
+		
 	}
 
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
-        <sys_created_by>aswinh</sys_created_by>
-        <sys_created_on>2017-08-10 04:36:22</sys_created_on>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-08-22 06:53:10</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
-        <sys_id>b2832b20db200300e5fc793ebf9619b8</sys_id>
-        <sys_mod_count>395</sys_mod_count>
-        <sys_name>Widget - External Rest API Explorer REQ</sys_name>
+        <sys_id>b3e53d20dbf44300e5fc793ebf961994</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>EXT - BACK UP</sys_name>
         <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
-        <sys_update_name>sp_widget_b2832b20db200300e5fc793ebf9619b8</sys_update_name>
+        <sys_update_name>sp_widget_b3e53d20dbf44300e5fc793ebf961994</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-08-23 17:34:39</sys_updated_on>
+        <sys_updated_on>2017-08-22 06:53:10</sys_updated_on>
         <template><![CDATA[<div id='rest_request_container'>
   <!-- your widget template -->
   <h4>
@@ -415,7 +341,7 @@ input:focus {
   </div>
 
   <!-- Header container and logic -->
-  <div class='my-flex mob-addl1'>
+  <div class='my-flex'>
     <button ng-click='addHeader()' style="margin-bottom: 10px;background: #f8f8f8;border: 1px solid #ddd;border-radius: 5px;margin-top: 5px;width: 200px; margin-right: 5px;">
       Add Header
     </button>
@@ -423,58 +349,51 @@ input:focus {
       Authentication
     </button>
   </div>
-  
-  
-  <!-- Authorization Header -->
-  <div ng-repeat='auth in authHeader' class='my-flex-dir my-row' >
-    
-    <div class='sect1'>
+  <!-- Authorization -->
+  <div class='my-flex header-rpt' ng-repeat='auth in authHeader'>
+    <div style='flex: 1 1 15%;'>
       <select ng-model='httpAuthType' style='width: 100%;' class='h-100 no-border-color'>
         <option value='Username / Password'>Usr / Pwd</option>
         <option value='Base64 Encoded'>Base64 Encoded</option>
       </select>
     </div>
-    
-    <div class='sect2'>
+    <div style='flex: 1 1 60%;' class='my-flex'>
       <input ng-model='auth[0].httpUsername' ng-show="httpAuthType == 'Username / Password' " class='h-100 commom-style-1' style='flex: 0 0 50%;border-right:1px solid #ddd;' placeholder='Username'/>
       <input ng-model='auth[0].httpPassword' ng-show="httpAuthType == 'Username / Password' " class='h-100 commom-style-1' style='flex: 0 0 50%;' placeholder='Password' type='password'/>
       <input ng-model='auth[0].httpBase64' ng-hide="httpAuthType == 'Username / Password' " class='h-100 commom-style-1' style='flex: 0 1 100%;' placeholder='Base64'/>
     </div>
-    
-    <div class='sect3'>
-      <button ng-show='httpAuthType == "Username / Password" ' ng-click='encodeAuthentication(true)' class='h-100 no-border-color auth-btn' style='border-right: 1px solid  #ddd; width: 49%;'>
-        Encode
+    <div style='flex: 1 1 25%; '>
+      <button ng-show='httpAuthType == "Username / Password" ' ng-click='encodeAuthentication(true)' class='h-100 no-border-color auth-btn' style='border-right: 1px solid  #ddd;'>
+        Encode(b64)
       </button>
-      <button ng-show='httpAuthType != "Username / Password" ' ng-click='encodeAuthentication(false)' class='h-100 no-border-color auth-btn' style='border-right: 1px solid  #ddd; width: 49%;'>
-        Decode
+      <button ng-show='httpAuthType != "Username / Password" ' ng-click='encodeAuthentication(false)' class='h-100 no-border-color auth-btn' style='border-right: 1px solid  #ddd;'>
+        Decode(b64)
       </button>
       <button  ng-click='removeAuthentication()' class='h-100 no-border-color auth-btn'>
         Remove 
       </button>
     </div>
   </div>
-  
-  <!-- NonAuthorization Headers -->
-  <div ng-repeat='h in headerConfigList' class='my-flex-dir my-row' >
-    <div class='sect1'>
-      <select ng-model='httpFinalHeaders[h.item.id][h.item.select]' style='width: 100%;'>
+  <div ng-repeat='h in headerConfigList' class='my-flex header-rpt' >
+    <div style='flex: 1 1 20%;'>
+      <select ng-model='httpFinalHeaders[h.item.id][h.item.select]' style='width: 100%;' class='h-100 no-border-color'>
         <option value='-Select-'>-Select-</option>
         <option ng-repeat='x in data.listOfHeaders | orderBy:"label"' value='{{x.label}}' title='{{x.title}}'>{{x.label}}</option>
       </select>
     </div>
-    <div class='sect2'>
-      <input ng-model='httpFinalHeaders[h.item.id][h.item.custom]' ng-show="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' " class='separator' placeholder='Header'/>
-      <input ng-model='httpFinalHeaders[h.item.id][h.item.value]' ng-show="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' "  placeholder='Value'/>
-      <input ng-model='httpFinalHeaders[h.item.id][h.item.value]' ng-hide="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' "  style='flex: 0 1 100%;' placeholder='Value'/>
+    <div style='flex: 1 1 75%;' class='my-flex'>
+      <input ng-model='httpFinalHeaders[h.item.id][h.item.custom]' ng-show="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' " class='h-100 commom-style-1' style='flex: 0 0 50%;border-right:1px solid #ddd;' placeholder='Header'/>
+      <input ng-model='httpFinalHeaders[h.item.id][h.item.value]' ng-show="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' " class='h-100 commom-style-1' style='flex: 0 0 50%;' placeholder='Value'/>
+      <input ng-model='httpFinalHeaders[h.item.id][h.item.value]' ng-hide="httpFinalHeaders[h.item.id][h.item.select] == '> Custom' " class='h-100 commom-style-1' style='flex: 0 1 100%;' placeholder='Value'/>
     </div>
-    <div class='sect3'>
+    <div style='flex: 1 1 5%; '>
       <button class='h-100 no-border-color' style='width: 100%; background-color: rgb(248, 248, 248); font-weight: bold;  border-bottom-right-radius: 5px;' ng-click='removeHeader(h.item.id)'>
         -
       </button>
     </div>
   </div>
 
-  <!-- BODY -->
+  <!-- OLD -->
   <div id='rest_body_container' ng-show='httpMethod == "POST"'  style='margin-right: 2px;'>
     Body
     <div>

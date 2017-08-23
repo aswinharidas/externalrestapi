@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <client_script><![CDATA[function($scope) {
+  /* widget controller */
+  var c = this;
+	$scope.test = function(){
+		c.data.ping = '200 OK';
+		c.data.ping_error = '400 OK';
+		c.data.ping_warn = '210 OK';
+		c.data.ping_info = '209 OK';
+		c.server.update().then(function(){
+			alert();
+		})
+	}
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>sandbox2</id>
+        <internal>false</internal>
+        <link/>
+        <name>sandbox2</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	if(input){
+		$sp.log('W input');
+		for(var i in input){
+			$sp.log(i);
+		}
+	}else{
+		$sp.log('W/O input');
+	}
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-08-23 17:20:45</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b62f45c9db300300e5fc793ebf9619f8</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>sandbox2</sys_name>
+        <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
+        <sys_update_name>sp_widget_b62f45c9db300300e5fc793ebf9619f8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-08-23 17:28:27</sys_updated_on>
+        <template><![CDATA[<div>
+<!-- your widget template -->
+  <button ng-click='test()'>
+    A
+  </button>
+</div>]]></template>
+    </sp_widget>
+</record_update>

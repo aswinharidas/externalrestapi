@@ -5,7 +5,7 @@
 	/* widget controller */
 	var c = this;
 	$scope.httpResponse = '';
-	$scope.httpBorderColor = "box-shadow: 0px 0px 3px 3px #ddd;";
+	$scope.httpBorderColor = "    box-shadow: 0px 0px 1px 1px #ddd;";
 	$rootScope.$on('httpResponseObtained',function(e,response){
 		$scope.status = response.status;
 		$scope.statusText = response.statusText;
@@ -22,7 +22,6 @@
         <css>div#rest_response_container{
   display:flex;
   flex-wrap: wrap;
-  border: 1px solid #ccc;
   padding: 2px;
   width: 100%;
   height: 80vh;
@@ -56,7 +55,7 @@ div#rest_response_container &gt; div.status-box{
         <description/>
         <docs/>
         <field_list/>
-        <has_preview>false</has_preview>
+        <has_preview>true</has_preview>
         <id>wgt-ext-restapi-explorer-response</id>
         <internal>false</internal>
         <link/>
@@ -71,7 +70,7 @@ div#rest_response_container &gt; div.status-box{
         <sys_created_on>2017-08-17 02:30:51</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>20f947f2dba40300e5fc793ebf9619af</sys_id>
-        <sys_mod_count>38</sys_mod_count>
+        <sys_mod_count>42</sys_mod_count>
         <sys_name>Widget - External Rest API Explorer - Re</sys_name>
         <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
         <sys_policy/>
@@ -79,7 +78,7 @@ div#rest_response_container &gt; div.status-box{
         <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
         <sys_update_name>sp_widget_20f947f2dba40300e5fc793ebf9619af</sys_update_name>
         <sys_updated_by>aswinh</sys_updated_by>
-        <sys_updated_on>2017-08-20 06:01:32</sys_updated_on>
+        <sys_updated_on>2017-08-20 17:43:51</sys_updated_on>
         <template><![CDATA[<div style=' {{httpBorderColor}}' id='rest_response_container'>
   <!-- your widget template -->
   <h4>
@@ -88,7 +87,6 @@ div#rest_response_container &gt; div.status-box{
   <div class='pill-box' ng-show='httpResponse != ""'>
     <button  ng-click='httpResponse = ""'> Clear </button>
     <button> Copy </button>
-    <button> Save </button>
   </div>
   <div class='status-box' ng-show='httpResponse != ""'>
     <div>Status: {{status}}</div>

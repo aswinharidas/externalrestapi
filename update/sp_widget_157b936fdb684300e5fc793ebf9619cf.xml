@@ -3,17 +3,10 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <client_script><![CDATA[function($scope,spModal) {
 	/* widget controller */
+	
 	var c = this;
-	$scope.EncodeUP = function(){
-		spModal.open({
-			title: 'Give me a name',
-			message: 'What would you like to name it?',
-			input: true,
-			value: c.name
-		}).then(function(name) {
-			c.name = name;
-		})
-
+	$scope.test = function(){
+		c.server.update();
 	}
 }]]></client_script>
         <controller_as>c</controller_as>
@@ -66,17 +59,9 @@ input::placeholder{
         <script><![CDATA[(function() {
 	/* populate the 'data' object */
 	/* e.g., data.table = $sp.getValue('table'); */
-	data.listOfHeaders=[];
-	if(!input){
-		var h = new GlideRecord('x_12945_extrestapi_header');
-		h.query();
-		while(h.next()){
-			var obj_h = {};
-			obj_h.value = h.getDisplayValue();
-			obj_h.label = h.getDisplayValue();
-			obj_h.title = h.hint.getDisplayValue() +" > "+h.example.getDisplayValue();
-			data.listOfHeaders.push(obj_h);
-		}
+	if(input){
+		$sp.log('Called...');
+		$sp.log(input);
 	}
 
 })();]]></script>
@@ -86,20 +71,20 @@ input::placeholder{
         <sys_created_on>2017-08-19 11:42:47</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>157b936fdb684300e5fc793ebf9619cf</sys_id>
-        <sys_mod_count>169</sys_mod_count>
+        <sys_mod_count>176</sys_mod_count>
         <sys_name>playground</sys_name>
         <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
         <sys_update_name>sp_widget_157b936fdb684300e5fc793ebf9619cf</sys_update_name>
-        <sys_updated_by>aswinh</sys_updated_by>
-        <sys_updated_on>2017-08-20 05:24:58</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-08-23 17:20:18</sys_updated_on>
         <template><![CDATA[<div>
   <!-- your widget template -->
  <!-- Header container and logic -->
-  <button ng-click='EncodeUP()' style="margin-bottom: 10px;background: #f8f8f8;border: 1px solid #ddd;border-radius: 5px;margin-top: 5px;width: 20%;">
-    Authentication
+  <button ng-click='test()' style="margin-bottom: 10px;background: #f8f8f8;border: 1px solid #ddd;border-radius: 5px;margin-top: 5px;width: 20%;">
+    A
   </button>
  
 </div>]]></template>

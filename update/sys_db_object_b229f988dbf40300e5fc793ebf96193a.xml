@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_db_object">
+    <sys_db_object action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <actions_access>false</actions_access>
+        <alter_access>false</alter_access>
+        <client_scripts_access>false</client_scripts_access>
+        <configuration_access>false</configuration_access>
+        <create_access>false</create_access>
+        <create_access_controls>true</create_access_controls>
+        <delete_access>false</delete_access>
+        <extension_model/>
+        <is_extendable>false</is_extendable>
+        <label>External Rest API Config</label>
+        <live_feed_enabled>false</live_feed_enabled>
+        <name>x_12945_extrestapi_config</name>
+        <number_ref display_value="EXTConfig">3fe9790cdbf40300e5fc793ebf9619f3</number_ref>
+        <provider_class/>
+        <read_access>true</read_access>
+        <super_class/>
+        <sys_class_code/>
+        <sys_class_name>sys_db_object</sys_class_name>
+        <sys_class_path/>
+        <sys_created_by>aswinh</sys_created_by>
+        <sys_created_on>2017-08-20 17:53:40</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b229f988dbf40300e5fc793ebf96193a</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>External Rest API Config</sys_name>
+        <sys_package display_value="External Rest API Explorer" source="x_12945_extrestapi">0c03a7a0db200300e5fc793ebf961974</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="External Rest API Explorer">0c03a7a0db200300e5fc793ebf961974</sys_scope>
+        <sys_update_name>sys_db_object_b229f988dbf40300e5fc793ebf96193a</sys_update_name>
+        <sys_updated_by>aswinh</sys_updated_by>
+        <sys_updated_on>2017-08-20 17:53:41</sys_updated_on>
+        <update_access>false</update_access>
+        <user_role display_value="ext_rest_explorer" name="ext_rest_explorer">23e9f10cdbf40300e5fc793ebf9619bc</user_role>
+        <ws_access>true</ws_access>
+    </sys_db_object>
+</record_update>
